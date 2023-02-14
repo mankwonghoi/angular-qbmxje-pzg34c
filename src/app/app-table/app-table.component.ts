@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {
   columnDefinition,
-  ColumnDefinition,
-  ColumnId,
+  TabId
 } from '../ColumnDefinition';
 import { User } from '../Data/User';
 import { TableControlService } from '../table-control.service';
@@ -14,36 +13,51 @@ import { TableControlService } from '../table-control.service';
 })
 export class AppTableComponent implements OnInit {
   _data: User[] | undefined;
+  _tableViewData: any;
 
-  _columnDefinition: ColumnDefinition | undefined;
-  _columnHeader: string[] | undefined;
-  _viewSelected = ColumnId.User;
+  _columnDefinition: any[] | undefined;
+  _viewSelected = TabId.User;
+  isEditMode: boolean = false;
+
 
   searchText: string | undefined;
 
-  constructor(public tableControlService: TableControlService) {}
-
-  _data$: User[] | undefined;
+  constructor(public tableControlService: TableControlService) { }
 
   ngOnInit(): void {
     //Assign current selected Tab
-    this._viewSelected = ColumnId.User; //to be change to selected tab...
-    console.log(this.tableControlService.selectedTab);
+    this._viewSelected = TabId.User; //to be change to selected tab...
     //Get columnDefinition by selected Tab
-    this._columnDefinition = columnDefinition.find(
-      (columnDefinition) => columnDefinition.columnId === this._viewSelected
-    );
-    if (this._columnDefinition) {
-      this._columnHeader = this._columnDefinition.columnHeader;
-    }
 
-    if (this._viewSelected == ColumnId.User) {
-      this._data = this.tableControlService.getUser();
-    }
+
+
+    this.refreshTable();
+
   }
 
+  changeMode() {
+    this.isEditMode = !this.isEditMode;
+
+  }
+
+
+
+  refreshTable() {
+    this._columnDefinition = columnDefinition.filter(
+      (columnDefinition) => columnDefinition.tabId === this._viewSelected
+    );
+
+    if (this._viewSelected == TabId.User) {
+      this._data = this.tableControlService.getUser();
+    }
+
+    //clone obejct without reference
+    this._tableViewData = this._data?.map(e => e);
+  }
+
+
+
   public inputChange(event: any, key: any) {
-    console.log(event);
-    console.log(key);
+
   }
 }

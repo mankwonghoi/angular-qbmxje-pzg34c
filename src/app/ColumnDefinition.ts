@@ -1,14 +1,7 @@
-export enum ColumnId {
+export enum TabId {
   User = 1,
   Group = 2,
   UserGroup = 3,
-}
-
-export interface ColumnDefinition {
-  columnId: number;
-  columnHeader: Array<string>;
-  columnDataAlias: Object;
-  filterable: boolean;
 }
 
 export interface Group {
@@ -23,29 +16,46 @@ export interface UserAccess {
   dateOfRelationshipCreation: string;
 }
 
-export const columnDefinition: ColumnDefinition[] = [
+export const columnDefinition: any[] = [
   {
-    columnId: ColumnId.User,
-    columnHeader: [
-      'User Id',
-      'First Name',
-      'Last Name',
-      'Login Name',
-      'Password',
-      'Email',
-    ],
+    tabId: TabId.User,
+    columnId: 'userId',
+    columnHeader: 'User Id',
     columnDataAlias: '',
     filterable: true,
   },
   {
-    columnId: ColumnId.Group,
-    columnHeader: ['Group Id', 'Group Name', 'Description'],
+    tabId: TabId.User,
+    columnId: 'firstName',
+    columnHeader: 'First Name',
     columnDataAlias: '',
     filterable: true,
   },
   {
-    columnId: ColumnId.UserGroup,
-    columnHeader: ['User Id', 'Group Id', 'Date of Relationship Creation'],
+    tabId: TabId.User,
+    columnId: 'LastName',
+    columnHeader: 'Last Name',
+    columnDataAlias: '',
+    filterable: true,
+  },
+  {
+    tabId: TabId.User,
+    columnId: 'LoginName',
+    columnHeader: 'Login Name',
+    columnDataAlias: '',
+    filterable: true,
+  },
+  {
+    tabId: TabId.User,
+    columnId: 'password',
+    columnHeader: 'Password',
+    columnDataAlias: '',
+    filterable: false,
+  },
+  {
+    tabId: TabId.User,
+    columnId: 'email',
+    columnHeader: 'Email',
     columnDataAlias: '',
     filterable: true,
   },
