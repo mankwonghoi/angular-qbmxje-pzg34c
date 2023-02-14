@@ -14,7 +14,7 @@
   {{ isEditMode ? 'Change To View Mode' : 'Change To Edit Mode' }}
 </button>
 
-<button *ngIf="isEditMode" class="submit" (click)="save()"> Save </button>
+<button *ngIf="isEditMode" class="submit" (click)="save()" [disabled]="saveBtnDisabled()"> Save </button>
 
 <table class="table table-striped">
   <thead>

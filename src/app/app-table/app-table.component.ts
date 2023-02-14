@@ -68,7 +68,7 @@ export class AppTableComponent implements OnInit {
       let email = this._columnDefinition.find(column => column.columnId === 'email')?.ngValue?.toLowerCase();
 
       if (userId || firstName || lastName || loginName || email) {
-
+        //TODO complete filter code
         this._tableViewData = this._data.filter(row => {
           if ((userId && row.userId.includes(userId))
           )
@@ -77,8 +77,8 @@ export class AppTableComponent implements OnInit {
 
         });
 
+        //end TODO
       } else {
-
         this._tableViewData = this._data;
       }
     }
@@ -123,5 +123,13 @@ export class AppTableComponent implements OnInit {
     console.log(this.activeId);
     this._viewSelected = this.activeId;
     this.refreshTable();
+  }
+
+  saveBtnDisabled() {
+
+    if (this._viewSelected == TabId.User) {
+      return JSON.stringify(this._data).includes('\"\"');
+    }
+    return true;
   }
 }
