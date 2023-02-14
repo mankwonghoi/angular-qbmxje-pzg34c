@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { columnDefinition, TabId } from '../ColumnDefinition';
-import { User } from '../Data/User';
 import { UserService } from '../Data/user.service';
 import { TableControlService } from '../table-control.service';
 
@@ -21,7 +20,7 @@ export class AppTableComponent implements OnInit {
   searchText: string = '';
 
   constructor(public tableControlService: TableControlService,
-    public userService: UserService,
+    public userService: UserService
 
   ) { }
 
@@ -87,13 +86,14 @@ export class AppTableComponent implements OnInit {
     }
   }
 
-
-
-
-  deleteRecord(deleteUser: User) {
+  // pop up ref
+  // https://ng-bootstrap.github.io/releases/13.x/#/components/modal/examples
+  deleteRecord(deleteUser: any) {
     if (this._viewSelected == TabId.User) {
-      this._data = this._data.filter(v => v.userId != deleteUser.userId);
+      this.userService.deleteUser(deleteUser);
     }
+
+    this.refreshTable();
   }
 
   addRecord() {

@@ -61,6 +61,10 @@ export class UserService {
     this.user = users.map(user => { user.newRecord = false; return user; });
   }
 
+  deleteUser(deleteUser: User) {
+    this.user = this.user.filter(v => v.userId != deleteUser.userId);
+  }
+
   vaildate(users: User[]) {
 
     this.user.forEach((user: User) => {
