@@ -9,7 +9,7 @@ import { UserService } from '../Data/user.service';
 })
 export class AppTableComponent implements OnInit {
   _data: any[] = [];
-  _tableViewData: any[] = [];
+  _tableViewData: any[] = []; //temp object for display
 
   _columnDefinition: any[] = [];
   _viewSelected = TabId.User;
@@ -39,13 +39,13 @@ export class AppTableComponent implements OnInit {
     );
 
     if (this._viewSelected == TabId.User) {
-      this._data = this.userService.getUser().map((e) => e);
+      this._data = this.userService.getUser();
     } else {
       this._data = [];
     }
 
     //clone obejct without reference
-    this._tableViewData = this._data.map((e) => e);
+    this._tableViewData = JSON.parse(JSON.stringify(this._data));
   }
 
   // Filter data when user input anything
@@ -117,7 +117,7 @@ export class AppTableComponent implements OnInit {
 
         this._tableViewData = tempViewData;
       } else {
-        this._tableViewData = this._data.map((e) => e);
+        this._tableViewData = JSON.parse(JSON.stringify(this._data));
       }
     }
   }
@@ -150,7 +150,9 @@ export class AppTableComponent implements OnInit {
   save() {
     if (this._viewSelected == TabId.User) {
       //Do each records validation
-      this.userService.updateUser(this._data);
+      this.userService.updateUser(
+        JSON.parse(JSON.stringify(this._tableViewData))
+      );
     }
 
     this.changeMode();
