@@ -1,3 +1,15 @@
+<ul ngbNav [(activeId)]="activeId" class="nav-pills">
+  <li [ngbNavItem]="1" (click)="onClick()">
+    <a ngbNavLink>User</a>
+  </li>
+  <li [ngbNavItem]="2" (click)="onClick()">
+    <a ngbNavLink>Group</a>
+  </li>
+  <li [ngbNavItem]="3" (click)="onClick()">
+    <a ngbNavLink>User Access</a>
+  </li>
+</ul>
+
 <button class="btn" (click)="changeMode()">
   {{ isEditMode ? 'Change To View Mode' : 'Change To Edit Mode' }}
 </button>
