@@ -104,7 +104,8 @@ export class AppTableComponent implements OnInit {
         lastName: '',
         loginName: '',
         password: '',
-        email: ''
+        email: '',
+        newRecord: true
       };
       this._data.splice(0, 0, newUser);
     }

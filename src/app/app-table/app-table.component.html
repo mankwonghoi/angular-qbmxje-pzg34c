@@ -52,7 +52,11 @@
   <tbody *ngIf="isEditMode">
     <tr *ngFor="let item of _data">
       <td><button (click)="deleteRecord(item)">delete</button></td>
-      <td>{{ item.userId }}</td>
+      <td>
+
+        <input type="text" value="{{ item.userId }}" [(ngModel)]="item.userId" *ngIf="item.newRecord" />
+        <span *ngIf="!item.newRecord">{{ item.userId }}</span>
+      </td>
       <td>
         <input type="text" value="{{ item.firstName }}" [(ngModel)]="item.firstName" />
       </td>

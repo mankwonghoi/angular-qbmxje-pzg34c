@@ -5,4 +5,5 @@ export interface User {
   loginName: string;
   password: string;
   email: string;
+  newRecord: boolean;
 }

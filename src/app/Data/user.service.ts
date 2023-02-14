@@ -13,6 +13,7 @@ export class UserService {
       loginName: 'tonywong',
       password: '1234567',
       email: 'tonywong@gmail.com',
+      newRecord: false
     },
     {
       userId: 'wewe',
@@ -21,6 +22,7 @@ export class UserService {
       loginName: 'benpong',
       password: '1234567',
       email: 'benpong@gmail.com',
+      newRecord: false
     },
     {
       userId: 'rere',
@@ -29,6 +31,7 @@ export class UserService {
       loginName: 'peterchan',
       password: '1234567',
       email: 'peterchan@gmail.com',
+      newRecord: false
     },
     {
       userId: 'qqq',
@@ -37,6 +40,7 @@ export class UserService {
       loginName: 'sandypui',
       password: '1234567',
       email: 'sandypui@gmail.com',
+      newRecord: false
     },
     {
       userId: 'zxcc',
@@ -45,6 +49,7 @@ export class UserService {
       loginName: 'kenyi',
       password: '1234567',
       email: 'kenyi@gmail.com',
+      newRecord: false
     },
   ];
 
@@ -53,7 +58,7 @@ export class UserService {
   }
 
   updateUser(users: User[]) {
-    this.user = users;
+    this.user = users.map(user => { user.newRecord = false; return user; });
   }
 
   vaildate(users: User[]) {
