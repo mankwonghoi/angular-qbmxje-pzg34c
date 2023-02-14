@@ -11,7 +11,7 @@ import { TableControlService } from '../table-control.service';
 })
 export class AppTableComponent implements OnInit {
   _data: any[] = [];
-  _tableViewData: any;
+  _tableViewData: any[] = [];
 
   _columnDefinition: any[] = [];
   _viewSelected = TabId.User;
