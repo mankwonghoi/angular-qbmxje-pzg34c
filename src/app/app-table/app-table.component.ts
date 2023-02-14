@@ -73,7 +73,7 @@ export class AppTableComponent implements OnInit {
         ?.ngValue?.toLowerCase();
 
       if (userId || firstName || lastName || loginName || email) {
-        let tempViewData = this._data;
+        let tempViewData = this._data.map((e) => e);
         //userId
         if (userId && userId.length > 0) {
           tempViewData = tempViewData.filter((row) => {
