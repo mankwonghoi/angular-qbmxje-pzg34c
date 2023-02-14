@@ -1,11 +1,12 @@
+<!--Nav Bar-->
 <ul ngbNav [(activeId)]="activeId" class="nav-pills">
-  <li [ngbNavItem]="1" (click)="onModeChange()">
+  <li [ngbNavItem]="1" (click)="onTabChange()">
     <a ngbNavLink>User</a>
   </li>
-  <li [ngbNavItem]="2" (click)="onModeChange()">
+  <li [ngbNavItem]="2" (click)="onTabChange()">
     <a ngbNavLink>Group</a>
   </li>
-  <li [ngbNavItem]="3" (click)="onModeChange()">
+  <li [ngbNavItem]="3" (click)="onTabChange()">
     <a ngbNavLink>User Access</a>
   </li>
 </ul>
@@ -23,8 +24,10 @@
   Save
 </button>
 
+<!--Table-->
 <table class="table table-striped">
   <thead>
+    <!--Header-->
     <tr *ngIf="_columnDefinition">
       <th *ngIf="isEditMode"><button (click)="addRecord()">Add</button></th>
       <th *ngFor="let column of _columnDefinition">
@@ -52,8 +55,9 @@
       </th>
     </tr>
   </thead>
+  <!--Body-->
   <tbody *ngIf="!isEditMode">
-    <tr *ngFor="let item of _tableViewData">
+    <tr *ngFor="let item of _data">
       <td>{{ item.userId }}</td>
       <td>{{ item.firstName }}</td>
       <td>{{ item.lastName }}</td>
@@ -63,47 +67,51 @@
     </tr>
   </tbody>
   <tbody *ngIf="isEditMode">
-    <tr *ngFor="let item of _tableViewData">
-      <td><button (click)="deleteRecord(item)">delete</button></td>
+    <tr *ngFor="let editItem of _tableViewData">
+      <td><button (click)="deleteRecord(editItem)">delete</button></td>
       <td>
         <input
           type="text"
-          value="{{ item.userId }}"
-          [(ngModel)]="item.userId"
-          *ngIf="item.newRecord"
+          value="{{ editItem.userId }}"
+          [(ngModel)]="editItem.userId"
+          *ngIf="editItem.newRecord"
         />
-        <span *ngIf="!item.newRecord">{{ item.userId }}</span>
+        <span *ngIf="!editItem.newRecord">{{ editItem.userId }}</span>
       </td>
       <td>
         <input
           type="text"
-          value="{{ item.firstName }}"
-          [(ngModel)]="item.firstName"
-        />
-      </td>
-      <td>
-        <input
-          type="text"
-          value="{{ item.lastName }}"
-          [(ngModel)]="item.lastName"
+          value="{{ editItem.firstName }}"
+          [(ngModel)]="editItem.firstName"
         />
       </td>
       <td>
         <input
           type="text"
-          value="{{ item.loginName }}"
-          [(ngModel)]="item.loginName"
+          value="{{ editItem.lastName }}"
+          [(ngModel)]="editItem.lastName"
+        />
+      </td>
+      <td>
+        <input
+          type="text"
+          value="{{ editItem.loginName }}"
+          [(ngModel)]="editItem.loginName"
         />
       </td>
       <td>
         <input
           type="password"
-          value="{{ item.password }}"
-          [(ngModel)]="item.password"
+          value="{{ editItem.password }}"
+          [(ngModel)]="editItem.password"
         />
       </td>
       <td>
-        <input type="text" value="{{ item.email }}" [(ngModel)]="item.email" />
+        <input
+          type="text"
+          value="{{ editItem.email }}"
+          [(ngModel)]="editItem.email"
+        />
       </td>
     </tr>
   </tbody>

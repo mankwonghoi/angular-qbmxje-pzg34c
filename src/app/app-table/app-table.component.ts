@@ -45,7 +45,7 @@ export class AppTableComponent implements OnInit {
     }
 
     //clone obejct without reference
-    this._tableViewData = this._data;
+    this._tableViewData = this._data.map((e) => e);
   }
 
   // Filter data when user input anything
@@ -117,7 +117,7 @@ export class AppTableComponent implements OnInit {
 
         this._tableViewData = tempViewData;
       } else {
-        this._tableViewData = this._data;
+        this._tableViewData = this._data.map((e) => e);
       }
     }
   }
@@ -156,7 +156,7 @@ export class AppTableComponent implements OnInit {
     this.changeMode();
   }
 
-  onModeChange(): void {
+  onTabChange(): void {
     console.log(this.activeId);
     this._viewSelected = this.activeId;
     this.refreshTable();
