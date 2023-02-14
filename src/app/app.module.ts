@@ -8,7 +8,6 @@ import { AppComponent } from './app.component';
 import { TopBarComponent } from './top-bar/top-bar.component';
 import { AppTableComponent } from './app-table/app-table.component';
 import { MaskPasswordPipe } from './mask-password.pipe';
-import { TableFilterPipe } from './table-filter.pipe';
 
 @NgModule({
   imports: [
@@ -18,13 +17,12 @@ import { TableFilterPipe } from './table-filter.pipe';
     FormsModule,
     RouterModule.forRoot([{ path: '', component: AppTableComponent }]),
   ],
-  declarations: [AppComponent, TopBarComponent, AppTableComponent, MaskPasswordPipe, TableFilterPipe],
+  declarations: [
+    AppComponent,
+    TopBarComponent,
+    AppTableComponent,
+    MaskPasswordPipe,
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
-
-/*
-Copyright Google LLC. All Rights Reserved.
-Use of this source code is governed by an MIT-style license that
-can be found in the LICENSE file at https://angular.io/license
-*/

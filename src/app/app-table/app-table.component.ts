@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { columnDefinition, TabId } from '../ColumnDefinition';
 import { UserService } from '../Data/user.service';
-import { TableControlService } from '../table-control.service';
 
 @Component({
   selector: 'app-app-table',
@@ -15,19 +14,15 @@ export class AppTableComponent implements OnInit {
   _columnDefinition: any[] = [];
   _viewSelected = TabId.User;
   isEditMode: boolean = false;
-  activeId: number = this.tableControlService.selectedTab;
+  activeId: number = TabId.User; //Start by User Tab
 
   searchText: string = '';
 
-  constructor(public tableControlService: TableControlService,
-    public userService: UserService
-
-  ) { }
+  constructor(public userService: UserService) {}
 
   ngOnInit(): void {
-    //Assign current selected Tab
-    this._viewSelected = TabId.User; //to be change to selected tab...
-    //Get columnDefinition by selected Tab
+    //Init current selected Tab to User
+    this._viewSelected = this.activeId;
 
     this.refreshTable();
   }
@@ -45,41 +40,82 @@ export class AppTableComponent implements OnInit {
 
     if (this._viewSelected == TabId.User) {
       this._data = this.userService.getUser().map((e) => e);
-    }
-    else {
+    } else {
       this._data = [];
     }
-
-
-
 
     //clone obejct without reference
     this._tableViewData = this._data;
   }
 
+  // Filter data when user input anything
   public inputChange(event: any, key: any) {
-    console.log(event);
+    //console.log(event);
 
-    console.log(key);
+    //console.log(key);
 
+    // User Tab
     if (this._viewSelected == TabId.User) {
-      let userId = this._columnDefinition.find(column => column.columnId === 'userId')?.ngValue?.toLowerCase();
-      let firstName = this._columnDefinition.find(column => column.columnId === 'firstName')?.ngValue?.toLowerCase();
-      let lastName = this._columnDefinition.find(column => column.columnId === 'lastName')?.ngValue?.toLowerCase();
-      let loginName = this._columnDefinition.find(column => column.columnId === 'loginName')?.ngValue?.toLowerCase();
-      let email = this._columnDefinition.find(column => column.columnId === 'email')?.ngValue?.toLowerCase();
+      let userId = this._columnDefinition
+        .find((column) => column.columnId === 'userId')
+        ?.ngValue?.toLowerCase();
+      let firstName = this._columnDefinition
+        .find((column) => column.columnId === 'firstName')
+        ?.ngValue?.toLowerCase();
+      let lastName = this._columnDefinition
+        .find((column) => column.columnId === 'lastName')
+        ?.ngValue?.toLowerCase();
+      let loginName = this._columnDefinition
+        .find((column) => column.columnId === 'loginName')
+        ?.ngValue?.toLowerCase();
+      let email = this._columnDefinition
+        .find((column) => column.columnId === 'email')
+        ?.ngValue?.toLowerCase();
 
       if (userId || firstName || lastName || loginName || email) {
-        //TODO complete filter code
-        this._tableViewData = this._data.filter(row => {
-          if ((userId && row.userId.includes(userId))
-          )
-            return true;
-          return false;
-
-        });
-
+        let tempViewData = this._data;
+        //userId
+        if (userId && userId.length > 0) {
+          tempViewData = tempViewData.filter((row) => {
+            if (userId && row.userId.toLowerCase().includes(userId))
+              return true;
+            return false;
+          });
+        }
+        //firstName
+        if (firstName && firstName.length > 0) {
+          tempViewData = tempViewData.filter((row) => {
+            if (firstName && row.firstName.toLowerCase().includes(firstName))
+              return true;
+            return false;
+          });
+        }
+        //lastName
+        if (lastName && lastName.length > 0) {
+          tempViewData = tempViewData.filter((row) => {
+            if (lastName && row.lastName.toLowerCase().includes(lastName))
+              return true;
+            return false;
+          });
+        }
+        //firstName
+        if (loginName && loginName.length > 0) {
+          tempViewData = tempViewData.filter((row) => {
+            if (loginName && row.loginName.toLowerCase().includes(loginName))
+              return true;
+            return false;
+          });
+        }
+        //firstName
+        if (email && email.length > 0) {
+          tempViewData = tempViewData.filter((row) => {
+            if (email && row.email.toLowerCase().includes(email)) return true;
+            return false;
+          });
+        }
         //end TODO
+
+        this._tableViewData = tempViewData;
       } else {
         this._tableViewData = this._data;
       }
@@ -105,23 +141,20 @@ export class AppTableComponent implements OnInit {
         loginName: '',
         password: '',
         email: '',
-        newRecord: true
+        newRecord: true,
       };
       this._data.splice(0, 0, newUser);
     }
   }
 
-
   save() {
     if (this._viewSelected == TabId.User) {
-      //Do each records validation 
+      //Do each records validation
       this.userService.updateUser(this._data);
     }
 
-
     this.changeMode();
   }
-
 
   onModeChange(): void {
     console.log(this.activeId);
@@ -130,9 +163,8 @@ export class AppTableComponent implements OnInit {
   }
 
   saveBtnDisabled() {
-
     if (this._viewSelected == TabId.User) {
-      return JSON.stringify(this._data).includes('\"\"');
+      return JSON.stringify(this._data).includes('""');
     }
     return true;
   }

@@ -14,7 +14,14 @@
   {{ isEditMode ? 'Change To View Mode' : 'Change To Edit Mode' }}
 </button>
 
-<button *ngIf="isEditMode" class="submit" (click)="save()" [disabled]="saveBtnDisabled()"> Save </button>
+<button
+  *ngIf="isEditMode"
+  class="submit"
+  (click)="save()"
+  [disabled]="saveBtnDisabled()"
+>
+  Save
+</button>
 
 <table class="table table-striped">
   <thead>
@@ -24,11 +31,17 @@
         <div *ngIf="!isEditMode">
           <!--Show Input box if it can be filter-->
           <div *ngIf="column.filterable">
-            <input type="text" placeholder="{{ column.columnHeader }}" (input)="inputChange($event, column)"
-              name="{{ column.columnId }}" [(ngModel)]="column.ngValue" value="{{ column.ngValue}}" />
+            <input
+              type="text"
+              placeholder="{{ column.columnHeader }}"
+              (input)="inputChange($event, column)"
+              name="{{ column.columnId }}"
+              [(ngModel)]="column.ngValue"
+              value="{{ column.ngValue }}"
+            />
           </div>
           <!--Show Label if it can't be filter-->
-          <div *ngIf="!column.filterable ">
+          <div *ngIf="!column.filterable">
             {{ column.columnHeader }}
           </div>
         </div>
@@ -50,24 +63,44 @@
     </tr>
   </tbody>
   <tbody *ngIf="isEditMode">
-    <tr *ngFor="let item of _data">
+    <tr *ngFor="let item of _tableViewData">
       <td><button (click)="deleteRecord(item)">delete</button></td>
       <td>
-
-        <input type="text" value="{{ item.userId }}" [(ngModel)]="item.userId" *ngIf="item.newRecord" />
+        <input
+          type="text"
+          value="{{ item.userId }}"
+          [(ngModel)]="item.userId"
+          *ngIf="item.newRecord"
+        />
         <span *ngIf="!item.newRecord">{{ item.userId }}</span>
       </td>
       <td>
-        <input type="text" value="{{ item.firstName }}" [(ngModel)]="item.firstName" />
+        <input
+          type="text"
+          value="{{ item.firstName }}"
+          [(ngModel)]="item.firstName"
+        />
       </td>
       <td>
-        <input type="text" value="{{ item.lastName }}" [(ngModel)]="item.lastName" />
+        <input
+          type="text"
+          value="{{ item.lastName }}"
+          [(ngModel)]="item.lastName"
+        />
       </td>
       <td>
-        <input type="text" value="{{ item.loginName }}" [(ngModel)]="item.loginName" />
+        <input
+          type="text"
+          value="{{ item.loginName }}"
+          [(ngModel)]="item.loginName"
+        />
       </td>
       <td>
-        <input type="password" value="{{ item.password }}" [(ngModel)]="item.password" />
+        <input
+          type="password"
+          value="{{ item.password }}"
+          [(ngModel)]="item.password"
+        />
       </td>
       <td>
         <input type="text" value="{{ item.email }}" [(ngModel)]="item.email" />
