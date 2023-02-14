@@ -10,7 +10,7 @@ import { TableControlService } from '../table-control.service';
   styleUrls: ['./app-table.component.css'],
 })
 export class AppTableComponent implements OnInit {
-  _data: User[] = [];
+  _data: any[] = [];
   _tableViewData: any;
 
   _columnDefinition: any[] = [];
@@ -46,6 +46,9 @@ export class AppTableComponent implements OnInit {
 
     if (this._viewSelected == TabId.User) {
       this._data = this.userService.getUser().map((e) => e);
+    }
+    else {
+      this._data = [];
     }
 
 
@@ -119,7 +122,7 @@ export class AppTableComponent implements OnInit {
   }
 
 
-  onClick(): void {
+  onModeChange(): void {
     console.log(this.activeId);
     this._viewSelected = this.activeId;
     this.refreshTable();
