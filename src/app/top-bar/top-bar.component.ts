@@ -8,7 +8,7 @@ import { TableControlService } from '../table-control.service';
 })
 export class TopBarComponent {
   activeId: number = this.tableControlService.selectedTab;
-  constructor(public tableControlService: TableControlService) {}
+  constructor(public tableControlService: TableControlService) { }
 
   onClick(): void {
     console.log(this.activeId);

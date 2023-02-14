@@ -23,6 +23,7 @@ export const columnDefinition: any[] = [
     columnHeader: 'User Id',
     columnDataAlias: '',
     filterable: true,
+    ngValue: ''
   },
   {
     tabId: TabId.User,
@@ -30,20 +31,23 @@ export const columnDefinition: any[] = [
     columnHeader: 'First Name',
     columnDataAlias: '',
     filterable: true,
+    ngValue: ''
   },
   {
     tabId: TabId.User,
-    columnId: 'LastName',
+    columnId: 'lastName',
     columnHeader: 'Last Name',
     columnDataAlias: '',
     filterable: true,
+    ngValue: ''
   },
   {
     tabId: TabId.User,
-    columnId: 'LoginName',
+    columnId: 'loginName',
     columnHeader: 'Login Name',
     columnDataAlias: '',
     filterable: true,
+    ngValue: ''
   },
   {
     tabId: TabId.User,
@@ -51,6 +55,7 @@ export const columnDefinition: any[] = [
     columnHeader: 'Password',
     columnDataAlias: '',
     filterable: false,
+    ngValue: ''
   },
   {
     tabId: TabId.User,
@@ -58,5 +63,6 @@ export const columnDefinition: any[] = [
     columnHeader: 'Email',
     columnDataAlias: '',
     filterable: true,
+    ngValue: ''
   },
 ];
