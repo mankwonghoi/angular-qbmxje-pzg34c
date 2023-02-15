@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { columnDefinition, TabId } from '../ColumnDefinition';
 import { UserService } from '../Data/user.service';
+import { GroupService } from '../Data/group.service';
+import { UserAccessService } from '../Data/user-access.service';
 import { DialogService, DialogType } from '../dialog/dialog.service';
 
 @Component({
@@ -21,6 +23,8 @@ export class AppTableComponent implements OnInit {
 
   constructor(
     public userService: UserService,
+    public groupService: GroupService,
+    public userAccessService: UserAccessService,
     public dialogService: DialogService
   ) {}
 
@@ -41,9 +45,13 @@ export class AppTableComponent implements OnInit {
     this._columnDefinition = columnDefinition.filter(
       (columnDefinition) => columnDefinition.tabId === this._viewSelected
     );
-
+    this._tableViewData = [];
     if (this._viewSelected == TabId.User) {
       this._data = this.userService.getUser();
+    } else if (this._viewSelected == TabId.UserAccess) {
+      this._data = this.userAccessService.getuserAccess();
+    } else if (this._viewSelected == TabId.Group) {
+      this._data = this.groupService.getGroup();
     } else {
       this._data = [];
     }

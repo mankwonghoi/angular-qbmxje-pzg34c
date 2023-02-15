@@ -4,10 +4,10 @@
     <a ngbNavLink>User</a>
   </li>
   <li [ngbNavItem]="2" (click)="onTabChange()">
-    <a ngbNavLink>Group</a>
+    <a ngbNavLink>User Access</a>
   </li>
   <li [ngbNavItem]="3" (click)="onTabChange()">
-    <a ngbNavLink>User Access</a>
+    <a ngbNavLink>Group</a>
   </li>
 </ul>
 
@@ -56,7 +56,8 @@
     </tr>
   </thead>
   <!--Body-->
-  <tbody *ngIf="!isEditMode">
+  <tbody *ngIf="!isEditMode && _viewSelected == 1">
+    <!--User-->
     <tr *ngFor="let item of _tableViewData">
       <td>{{ item.userId }}</td>
       <td>{{ item.firstName }}</td>
@@ -66,7 +67,24 @@
       <td>{{ item.email }}</td>
     </tr>
   </tbody>
-  <tbody *ngIf="isEditMode">
+  <tbody *ngIf="!isEditMode && _viewSelected == 2">
+    <!--User Access-->
+    <tr *ngFor="let item of _tableViewData">
+      <td>{{ item.userId }}</td>
+      <td>{{ item.groupId }}</td>
+      <td>{{ item.dateOfRelationshipCreation }}</td>
+    </tr>
+  </tbody>
+  <tbody *ngIf="!isEditMode && _viewSelected == 3">
+    <!--Group-->
+    <tr *ngFor="let item of _tableViewData">
+      <td>{{ item.groupId }}</td>
+      <td>{{ item.groupName }}</td>
+      <td>{{ item.description }}</td>
+    </tr>
+  </tbody>
+  <tbody *ngIf="isEditMode && _viewSelected == 1">
+    <!--User-->
     <tr *ngFor="let editItem of _tableViewData">
       <td><button (click)="deleteRecord(editItem)">delete</button></td>
       <td>
@@ -116,5 +134,67 @@
       </td>
     </tr>
   </tbody>
+  <tbody *ngIf="isEditMode && _viewSelected == 2">
+    <!--User Access-->
+    <tr *ngFor="let editItem of _tableViewData">
+      <td><button (click)="deleteRecord(editItem)">delete</button></td>
+      <td>
+        <input
+          *ngIf="editItem.newRecord"
+          type="dropdown"
+          value="{{ editItem.userId }}"
+          [(ngModel)]="editItem.userId"
+          (focusout)="onInputIdleave(editItem.userId)"
+        />
+        <span *ngIf="!editItem.newRecord">{{ editItem.userId }}</span>
+      </td>
+      <td>
+        <input
+          type="dropDown"
+          value="{{ editItem.groupId }}"
+          [(ngModel)]="editItem.groupId"
+        />
+      </td>
+      <td>
+        <input
+          type="text"
+          value="{{ editItem.dateOfRelationshipCreation }}"
+          [(ngModel)]="editItem.dateOfRelationshipCreation"
+        />
+      </td>
+    </tr>
+  </tbody>
+  <tbody *ngIf="isEditMode && _viewSelected == 3">
+    <!--Group-->
+    <tr *ngFor="let editItem of _tableViewData">
+      <td><button (click)="deleteRecord(editItem)">delete</button></td>
+      <td>
+        <input
+          *ngIf="editItem.newRecord"
+          type="text"
+          value="{{ editItem.groupId }}"
+          [(ngModel)]="editItem.groupId"
+          (focusout)="onInputIdleave(editItem.groupId)"
+        />
+        <span *ngIf="!editItem.newRecord">{{ editItem.userId }}</span>
+      </td>
+      <td>
+        <input
+          type="text"
+          value="{{ editItem.groupName }}"
+          [(ngModel)]="editItem.groupName"
+        />
+      </td>
+      <td>
+        <input
+          type="text"
+          value="{{ editItem.description }}"
+          [(ngModel)]="editItem.description"
+        />
+      </td>
+    </tr>
+  </tbody>
 </table>
+
+<!--Dialog-->
 <app-dialog></app-dialog>
