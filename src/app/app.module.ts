@@ -5,7 +5,6 @@ import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
-import { TopBarComponent } from './top-bar/top-bar.component';
 import { AppTableComponent } from './app-table/app-table.component';
 import { MaskPasswordPipe } from './mask-password.pipe';
 import { DialogComponent } from './dialog/dialog.component';
@@ -22,7 +21,6 @@ import { DialogService } from './dialog/dialog.service';
   providers: [DialogService],
   declarations: [
     AppComponent,
-    TopBarComponent,
     AppTableComponent,
     MaskPasswordPipe,
     DialogComponent,

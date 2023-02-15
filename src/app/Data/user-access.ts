@@ -1,6 +1,6 @@
 export interface UserAccess {
   userId: string;
   groupId: string;
-  dateOfRelationshipCreation: string;
+  dateOfRelationshipCreation: Date;
   newRecord: boolean;
 }

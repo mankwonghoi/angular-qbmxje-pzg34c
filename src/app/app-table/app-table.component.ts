@@ -86,11 +86,36 @@ export class AppTableComponent implements OnInit {
   // https://ng-bootstrap.github.io/releases/13.x/#/components/modal/examples
   deleteRecord(deleteUser: any) {
     if (this._viewSelected == TabId.User) {
-      this.userService.deleteUser(deleteUser);
+      this.showDialog(
+        deleteUser.userId + ' will be deleted. Confirm?',
+        () => {
+          this.userService.deleteUser(deleteUser);
+        },
+        function () {},
+        DialogType.oneOKButton
+      );
     } else if (this._viewSelected == TabId.UserAccess) {
-      this.userAccessService.deleteuserAccess(deleteUser);
+      this.showDialog(
+        'Do you want to remove the relationship between ' +
+          deleteUser.userId +
+          ' and ' +
+          deleteUser.groupId +
+          '?',
+        () => {
+          this.userAccessService.deleteuserAccess(deleteUser);
+        },
+        function () {},
+        DialogType.oneOKButton
+      );
     } else if (this._viewSelected == TabId.Group) {
-      this.groupService.deleteGroup(deleteUser);
+      this.showDialog(
+        deleteUser.groupId + ' will be deleted. Confirm?',
+        () => {
+          this.groupService.deleteGroup(deleteUser);
+        },
+        function () {},
+        DialogType.oneOKButton
+      );
     }
 
     this.refreshTable();
@@ -173,12 +198,7 @@ export class AppTableComponent implements OnInit {
       //Is empty input exist?
       let tempViewData = this._tableViewData.map((e) => e);
       tempViewData = tempViewData.filter((row) => {
-        if (
-          row.userId.length == 0 ||
-          row.groupId.length == 0 ||
-          row.dateOfRelationshipCreation.length == 0
-        )
-          return true;
+        if (row.userId.length == 0 || row.groupId.length == 0) return true;
         return false;
       });
       //return JSON.stringify(this._tableViewData).includes('""');
@@ -217,7 +237,12 @@ export class AppTableComponent implements OnInit {
         }
       });
       if (tempCount >= 2) {
-        this.showDialog(id + ' already defined');
+        this.showDialog(
+          id + ' already defined',
+          function () {},
+          function () {},
+          DialogType.oneOKButton
+        );
       }
     }
   }
@@ -231,20 +256,23 @@ export class AppTableComponent implements OnInit {
         }
       });
       if (tempCount >= 2) {
-        this.showDialog(id + ' already defined');
+        this.showDialog(
+          id + ' already defined',
+          function () {},
+          function () {},
+          DialogType.oneOKButton
+        );
       }
     }
   }
 
-  showDialog(msg: string) {
-    this.dialogService.confirmThis(
-      msg,
-      function () {
-        console.log('dsda');
-      },
-      function () {},
-      DialogType.oneOKButton
-    );
+  showDialog(
+    msg: string,
+    yesFn: () => void,
+    noFn: () => void,
+    dialogType: DialogType
+  ) {
+    this.dialogService.confirmThis(msg, yesFn, noFn, dialogType);
   }
 
   ////////////////////////////Filter Start/////////////////////////////////

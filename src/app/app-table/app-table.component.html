@@ -5,6 +5,8 @@
   (navChange)="onTabChange($event)"
   (activeIdChange)="onActiveIdChange()"
   class="nav-pills"
+  justify-content="center"
+  align-items="center"
 >
   <li [ngbNavItem]="1">
     <a ngbNavLink>User</a>
@@ -78,7 +80,7 @@
     <tr *ngFor="let item of _tableViewData">
       <td>{{ item.userId }}</td>
       <td>{{ item.groupId }}</td>
-      <td>{{ item.dateOfRelationshipCreation }}</td>
+      <td>{{ item.dateOfRelationshipCreation | date: 'yyyy-MM-dd' }}</td>
     </tr>
   </tbody>
   <tbody *ngIf="!isEditMode && _viewSelected == 3">
@@ -159,11 +161,7 @@
         </select>
       </td>
       <td>
-        <input
-          type="text"
-          value="{{ editItem.dateOfRelationshipCreation }}"
-          [(ngModel)]="editItem.dateOfRelationshipCreation"
-        />
+        {{ editItem.dateOfRelationshipCreation | date: 'yyyy-MM-dd' }}
         <!--<div class="input-group">
           <input
             class="form-control"

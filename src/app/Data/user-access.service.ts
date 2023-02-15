@@ -8,7 +8,7 @@ export class UserAccessService {
     {
       userId: 'wewe',
       groupId: 'group3',
-      dateOfRelationshipCreation: '2023/01/01',
+      dateOfRelationshipCreation: new Date('2023-01-01'),
       newRecord: false,
     },
   ];
@@ -20,6 +20,8 @@ export class UserAccessService {
   updateuserAccess(userAccesss: UserAccess[]) {
     this.userAccess = userAccesss.map((userAccess) => {
       userAccess.newRecord = false;
+      if (!userAccess.dateOfRelationshipCreation)
+        userAccess.dateOfRelationshipCreation = new Date();
       return userAccess;
     });
   }
