@@ -18,7 +18,7 @@ export class DialogComponent implements OnInit {
      */
     this.dialogService.getMessage().subscribe((message) => {
       this.message = message;
+      this.dialogType = message.DialogType;
     });
-    this.dialogType = this.dialogService.dialogType;
   }
 }

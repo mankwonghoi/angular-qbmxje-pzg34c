@@ -11,7 +11,7 @@ export enum DialogType {
 @Injectable()
 export class DialogService {
   private subject = new Subject<any>();
-  dialogType: DialogType = DialogType.oneOKButton;
+  dialogType: DialogType | undefined;
 
   confirmThis(
     message: string,
@@ -19,7 +19,6 @@ export class DialogService {
     noFn: () => void,
     dialogType: DialogType
   ): any {
-    this.dialogType = dialogType;
     this.setConfirmation(message, yesFn, noFn, dialogType);
   }
 
@@ -29,6 +28,7 @@ export class DialogService {
     noFn: () => void,
     dialogType: DialogType
   ): any {
+    console.log('dialogType:' + dialogType);
     const that = this;
     this.subject.next({
       type: 'confirm',
@@ -41,10 +41,15 @@ export class DialogService {
         that.subject.next(null);
         noFn();
       },
+      DialogType: dialogType,
     });
   }
 
   getMessage(): Observable<any> {
+    return this.subject.asObservable();
+  }
+
+  getDialogType(): Observable<any> {
     return this.subject.asObservable();
   }
 }

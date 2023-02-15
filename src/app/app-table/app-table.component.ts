@@ -90,9 +90,10 @@ export class AppTableComponent implements OnInit {
         deleteUser.userId + ' will be deleted. Confirm?',
         () => {
           this.userService.deleteUser(deleteUser);
+          this.refreshTable();
         },
         function () {},
-        DialogType.oneOKButton
+        DialogType.yesNoButton
       );
     } else if (this._viewSelected == TabId.UserAccess) {
       this.showDialog(
@@ -103,22 +104,22 @@ export class AppTableComponent implements OnInit {
           '?',
         () => {
           this.userAccessService.deleteuserAccess(deleteUser);
+          this.refreshTable();
         },
         function () {},
-        DialogType.oneOKButton
+        DialogType.yesNoButton
       );
     } else if (this._viewSelected == TabId.Group) {
       this.showDialog(
         deleteUser.groupId + ' will be deleted. Confirm?',
         () => {
           this.groupService.deleteGroup(deleteUser);
+          this.refreshTable();
         },
         function () {},
-        DialogType.oneOKButton
+        DialogType.yesNoButton
       );
     }
-
-    this.refreshTable();
   }
 
   addRecord() {
@@ -239,6 +240,31 @@ export class AppTableComponent implements OnInit {
       if (tempCount >= 2) {
         this.showDialog(
           id + ' already defined',
+          function () {},
+          function () {},
+          DialogType.oneOKButton
+        );
+      }
+    }
+  }
+
+  onInputUserAccessleave(id: any): void {
+    console.log('OnInputUserAccessLeave');
+    if (id) {
+      let tempCount = 0;
+      this._tableViewData.forEach(function (row) {
+        console.log(row);
+        if (row.userId == id.userId && row.groupId == id.groupId) {
+          tempCount++;
+        }
+      });
+      if (tempCount >= 2) {
+        this.showDialog(
+          'The relationship between ' +
+            id.userId +
+            ' and ' +
+            id.groupId +
+            ' already exists.',
           function () {},
           function () {},
           DialogType.oneOKButton

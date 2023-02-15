@@ -147,14 +147,22 @@
     <tr *ngFor="let editItem of _tableViewData">
       <td><button (click)="deleteRecord(editItem)">delete</button></td>
       <td>
-        <select value="{{ editItem.userId }}" [(ngModel)]="editItem.userId">
+        <select
+          value="{{ editItem.userId }}"
+          [(ngModel)]="editItem.userId"
+          (change)="onInputUserAccessleave(editItem)"
+        >
           <option *ngFor="let user of _userData">
             {{ user.userId }}
           </option>
         </select>
       </td>
       <td>
-        <select value="{{ editItem.groupId }}" [(ngModel)]="editItem.groupId">
+        <select
+          value="{{ editItem.groupId }}"
+          [(ngModel)]="editItem.groupId"
+          (change)="onInputUserAccessleave(editItem)"
+        >
           <option *ngFor="let group of _groupData">
             {{ group.groupId }}
           </option>
@@ -162,22 +170,6 @@
       </td>
       <td>
         {{ editItem.dateOfRelationshipCreation | date: 'yyyy-MM-dd' }}
-        <!--<div class="input-group">
-          <input
-            class="form-control"
-            placeholder="yyyy-mm-dd"
-            name="dp"
-            value="{{ editItem.dateOfRelationshipCreation }}"
-            [(ngModel)]="editItem.dateOfRelationshipCreation"
-            ngbDatepicker
-            #d="ngbDatepicker"
-          />
-          <button
-            class="btn btn-outline-secondary calendar"
-            (click)="d.toggle()"
-            type="button"
-          ></button>
-        </div>-->
       </td>
     </tr>
   </tbody>
