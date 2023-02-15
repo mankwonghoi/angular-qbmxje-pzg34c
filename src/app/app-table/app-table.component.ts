@@ -269,14 +269,18 @@ export class AppTableComponent implements OnInit {
       //groupId
       if (groupId?.length > 0) {
         tempViewData = tempViewData.filter((row) => {
-          if (row.firstName.toLowerCase().includes(groupId)) return true;
+          if (row.groupId.toLowerCase().includes(groupId)) return true;
           return false;
         });
       }
       //dateOfRelationshipCreation
       if (dateOfRelationshipCreation?.length > 0) {
         tempViewData = tempViewData.filter((row) => {
-          if (row.lastName.toLowerCase().includes(dateOfRelationshipCreation))
+          if (
+            row.dateOfRelationshipCreation
+              .toLowerCase()
+              .includes(dateOfRelationshipCreation)
+          )
             return true;
           return false;
         });
@@ -305,21 +309,21 @@ export class AppTableComponent implements OnInit {
       //groupId
       if (groupId?.length > 0) {
         tempViewData = tempViewData.filter((row) => {
-          if (row.firstName.toLowerCase().includes(groupId)) return true;
+          if (row.groupId.toLowerCase().includes(groupId)) return true;
           return false;
         });
       }
       //groupName
       if (groupName?.length > 0) {
         tempViewData = tempViewData.filter((row) => {
-          if (row.userId.toLowerCase().includes(groupName)) return true;
+          if (row.groupName.toLowerCase().includes(groupName)) return true;
           return false;
         });
       }
       //description
       if (description?.length > 0) {
         tempViewData = tempViewData.filter((row) => {
-          if (row.lastName.toLowerCase().includes(description)) return true;
+          if (row.description.toLowerCase().includes(description)) return true;
           return false;
         });
       }
