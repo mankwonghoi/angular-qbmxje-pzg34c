@@ -5,6 +5,7 @@ import { GroupService } from '../Data/group.service';
 import { UserAccessService } from '../Data/user-access.service';
 import { UserService } from '../Data/user.service';
 import { DialogService, DialogType } from '../dialog/dialog.service';
+import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-app-table',
@@ -14,6 +15,8 @@ import { DialogService, DialogType } from '../dialog/dialog.service';
 export class AppTableComponent implements OnInit {
   _data: any[] = [];
   _tableViewData: any[] = []; //temp object for display
+  _userData: any[] = [];
+  _groupData: any[] = [];
 
   _columnDefinition: any[] = [];
   _viewSelected = TabId.User;
@@ -21,6 +24,7 @@ export class AppTableComponent implements OnInit {
   activeId: number = TabId.User; //Start by User Tab
 
   searchText: string = '';
+  datePicker: NgbDateStruct | undefined;
 
   constructor(
     public userService: UserService,
@@ -66,6 +70,8 @@ export class AppTableComponent implements OnInit {
       this._data = this.userService.getUser();
     } else if (this._viewSelected == TabId.UserAccess) {
       this._data = this.userAccessService.getuserAccess();
+      this._userData = this.userService.getUser();
+      this._groupData = this.groupService.getGroup();
     } else if (this._viewSelected == TabId.Group) {
       this._data = this.groupService.getGroup();
     } else {
@@ -81,6 +87,10 @@ export class AppTableComponent implements OnInit {
   deleteRecord(deleteUser: any) {
     if (this._viewSelected == TabId.User) {
       this.userService.deleteUser(deleteUser);
+    } else if (this._viewSelected == TabId.UserAccess) {
+      this.userAccessService.deleteuserAccess(deleteUser);
+    } else if (this._viewSelected == TabId.Group) {
+      this.groupService.deleteGroup(deleteUser);
     }
 
     this.refreshTable();
@@ -98,17 +108,36 @@ export class AppTableComponent implements OnInit {
         newRecord: true,
       };
       this._tableViewData.splice(0, 0, newUser);
+    } else if (this._viewSelected == TabId.UserAccess) {
+      let newUserAccess = {
+        userId: '',
+        groupId: '',
+        dateOfRelationshipCreation: '',
+        newRecord: true,
+      };
+      this._tableViewData.splice(0, 0, newUserAccess);
+    } else if (this._viewSelected == TabId.Group) {
+      let newGroup = {
+        groupId: '',
+        groupName: '',
+        description: '',
+        newRecord: true,
+      };
+      this._tableViewData.splice(0, 0, newGroup);
     }
   }
 
   save() {
     if (this._viewSelected == TabId.User) {
-      //Do each records validation
-      this.userService.vaildate(
+      this.userService.updateUser(
         JSON.parse(JSON.stringify(this._tableViewData))
       );
-
-      this.userService.updateUser(
+    } else if (this._viewSelected == TabId.UserAccess) {
+      this.userAccessService.updateuserAccess(
+        JSON.parse(JSON.stringify(this._tableViewData))
+      );
+    } else if (this._viewSelected == TabId.Group) {
+      this.groupService.updateGroup(
         JSON.parse(JSON.stringify(this._tableViewData))
       );
     }
@@ -137,22 +166,68 @@ export class AppTableComponent implements OnInit {
       });
       //return JSON.stringify(this._tableViewData).includes('""');
       return tempViewData.length > 0;
+    } else if (this._viewSelected == TabId.UserAccess) {
+      //Is data equals
+      if (JSON.stringify(this._tableViewData) == JSON.stringify(this._data))
+        return true;
+      //Is empty input exist?
+      let tempViewData = this._tableViewData.map((e) => e);
+      tempViewData = tempViewData.filter((row) => {
+        if (
+          row.userId.length == 0 ||
+          row.groupId.length == 0 ||
+          row.dateOfRelationshipCreation.length == 0
+        )
+          return true;
+        return false;
+      });
+      //return JSON.stringify(this._tableViewData).includes('""');
+      return tempViewData.length > 0;
+
+      //return angular.equals(val1, val2);
+    } else if (this._viewSelected == TabId.Group) {
+      //Is data equals
+      if (JSON.stringify(this._tableViewData) == JSON.stringify(this._data))
+        return true;
+      //Is empty input exist?
+      let tempViewData = this._tableViewData.map((e) => e);
+      tempViewData = tempViewData.filter((row) => {
+        if (
+          row.groupId.length == 0 ||
+          row.groupName.length == 0 ||
+          row.description.length == 0
+        )
+          return true;
+        return false;
+      });
+      //return JSON.stringify(this._tableViewData).includes('""');
+      return tempViewData.length > 0;
 
       //return angular.equals(val1, val2);
     }
     return true;
   }
 
-  onInputIdleave(id: string): void {
+  onInputUserIdleave(id: string): void {
     if (id.length > 0) {
       let tempCount = 0;
       this._tableViewData.forEach(function (row) {
         if (row.userId == id) {
           tempCount++;
-          if (tempCount >= 2) {
-            console.log(row.userId);
-            console.log('duplicate:' + id);
-          }
+        }
+      });
+      if (tempCount >= 2) {
+        this.showDialog(id + ' already defined');
+      }
+    }
+  }
+
+  onInputGroupIdleave(id: string): void {
+    if (id.length > 0) {
+      let tempCount = 0;
+      this._tableViewData.forEach(function (row) {
+        if (row.groupId == id) {
+          tempCount++;
         }
       });
       if (tempCount >= 2) {

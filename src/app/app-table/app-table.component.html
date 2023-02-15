@@ -99,7 +99,7 @@
           type="text"
           value="{{ editItem.userId }}"
           [(ngModel)]="editItem.userId"
-          (focusout)="onInputIdleave(editItem.userId)"
+          (focusout)="onInputUserIdleave(editItem.userId)"
         />
         <span *ngIf="!editItem.newRecord">{{ editItem.userId }}</span>
       </td>
@@ -145,21 +145,18 @@
     <tr *ngFor="let editItem of _tableViewData">
       <td><button (click)="deleteRecord(editItem)">delete</button></td>
       <td>
-        <input
-          *ngIf="editItem.newRecord"
-          type="dropdown"
-          value="{{ editItem.userId }}"
-          [(ngModel)]="editItem.userId"
-          (focusout)="onInputIdleave(editItem.userId)"
-        />
-        <span *ngIf="!editItem.newRecord">{{ editItem.userId }}</span>
+        <select value="{{ editItem.userId }}" [(ngModel)]="editItem.userId">
+          <option *ngFor="let user of _userData">
+            {{ user.userId }}
+          </option>
+        </select>
       </td>
       <td>
-        <input
-          type="dropDown"
-          value="{{ editItem.groupId }}"
-          [(ngModel)]="editItem.groupId"
-        />
+        <select value="{{ editItem.groupId }}" [(ngModel)]="editItem.groupId">
+          <option *ngFor="let group of _groupData">
+            {{ group.groupId }}
+          </option>
+        </select>
       </td>
       <td>
         <input
@@ -167,6 +164,22 @@
           value="{{ editItem.dateOfRelationshipCreation }}"
           [(ngModel)]="editItem.dateOfRelationshipCreation"
         />
+        <!--<div class="input-group">
+          <input
+            class="form-control"
+            placeholder="yyyy-mm-dd"
+            name="dp"
+            value="{{ editItem.dateOfRelationshipCreation }}"
+            [(ngModel)]="editItem.dateOfRelationshipCreation"
+            ngbDatepicker
+            #d="ngbDatepicker"
+          />
+          <button
+            class="btn btn-outline-secondary calendar"
+            (click)="d.toggle()"
+            type="button"
+          ></button>
+        </div>-->
       </td>
     </tr>
   </tbody>
@@ -180,7 +193,7 @@
           type="text"
           value="{{ editItem.groupId }}"
           [(ngModel)]="editItem.groupId"
-          (focusout)="onInputIdleave(editItem.groupId)"
+          (focusout)="onInputGroupIdleave(editItem.groupId)"
         />
         <span *ngIf="!editItem.newRecord">{{ editItem.groupId }}</span>
       </td>

@@ -6,8 +6,8 @@ import { UserAccess } from './user-access';
 export class UserAccessService {
   userAccess: UserAccess[] = [
     {
-      userId: 'dsads',
-      groupId: 'group1',
+      userId: 'wewe',
+      groupId: 'group3',
       dateOfRelationshipCreation: '2023/01/01',
       newRecord: false,
     },
