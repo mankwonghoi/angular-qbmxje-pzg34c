@@ -6,7 +6,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { TopBarComponent } from './top-bar/top-bar.component';
-import { UserTableComponent } from './user-table/user-table.component';
+import { AppTableComponent } from './app-table/app-table.component';
 import { MaskPasswordPipe } from './mask-password.pipe';
 
 @NgModule({
@@ -15,12 +15,12 @@ import { MaskPasswordPipe } from './mask-password.pipe';
     NgbModule,
     ReactiveFormsModule,
     FormsModule,
-    RouterModule.forRoot([{ path: '', component: UserTableComponent }]),
+    RouterModule.forRoot([{ path: '', component: AppTableComponent }]),
   ],
   declarations: [
     AppComponent,
     TopBarComponent,
-    UserTableComponent,
+    AppTableComponent,
     MaskPasswordPipe,
   ],
   bootstrap: [AppComponent],

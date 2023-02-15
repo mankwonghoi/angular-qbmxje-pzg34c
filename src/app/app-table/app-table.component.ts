@@ -3,11 +3,11 @@ import { columnDefinition, TabId } from '../ColumnDefinition';
 import { UserService } from '../Data/user.service';
 
 @Component({
-  selector: 'app-user-table',
-  templateUrl: './user-table.component.html',
-  styleUrls: ['./user-table.component.css'],
+  selector: 'app-app-table',
+  templateUrl: './app-table.component.html',
+  styleUrls: ['./app-table.component.css'],
 })
-export class UserTableComponent implements OnInit {
+export class AppTableComponent implements OnInit {
   _data: any[] = [];
   _tableViewData: any[] = []; //temp object for display
 
