@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NgbNavChangeEvent } from '@ng-bootstrap/ng-bootstrap';
 import { columnDefinition, TabId } from '../ColumnDefinition';
 import { GroupService } from '../Data/group.service';
 import { UserAccessService } from '../Data/user-access.service';
@@ -26,7 +27,7 @@ export class AppTableComponent implements OnInit {
     public groupService: GroupService,
     public userAccessService: UserAccessService,
     public dialogService: DialogService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     //Init current selected Tab to User
@@ -34,6 +35,21 @@ export class AppTableComponent implements OnInit {
 
     this.refreshTable();
   }
+
+  //Top Bar start//
+  onTabChange(changeEvent: NgbNavChangeEvent): void {
+    if (this.isEditMode) {
+      changeEvent.preventDefault();
+    }
+  }
+
+  onActiveIdChange(): void {
+    this._viewSelected = this.activeId;
+    console.log('top bar selectedTab: ' + this._viewSelected);
+
+    this.refreshTable();
+  }
+  //Top Bar End//
 
   changeMode() {
     this.isEditMode = !this.isEditMode;
@@ -58,14 +74,6 @@ export class AppTableComponent implements OnInit {
 
     //clone obejct without reference
     this._tableViewData = JSON.parse(JSON.stringify(this._data));
-  }
-
-  // Filter data when user input anything
-  public inputChange(event: any, key: any) {
-    // User Tab
-    if (this._viewSelected == TabId.User) {
-      this.userFilter();
-    }
   }
 
   // pop up ref
@@ -106,11 +114,6 @@ export class AppTableComponent implements OnInit {
     }
 
     this.changeMode();
-  }
-
-  onTabChange(): void {
-    this._viewSelected = this.activeId;
-    this.refreshTable();
   }
 
   //Disable Save button
@@ -164,9 +167,22 @@ export class AppTableComponent implements OnInit {
       function () {
         console.log('dsda');
       },
-      function () { },
+      function () {},
       DialogType.oneOKButton
     );
+  }
+
+  ////////////////////////////Filter Start/////////////////////////////////
+  // Filter data when user input anything
+  public inputChange(event: any, key: any) {
+    // User Tab
+    if (this._viewSelected == TabId.User) {
+      this.userFilter();
+    } else if (this._viewSelected == TabId.UserAccess) {
+      this.userAccessFilter();
+    } else if (this._viewSelected == TabId.Group) {
+      this.groupFilter();
+    }
   }
 
   userFilter() {
@@ -229,4 +245,90 @@ export class AppTableComponent implements OnInit {
       this._tableViewData = JSON.parse(JSON.stringify(this._data));
     }
   }
+
+  userAccessFilter() {
+    let userId = this._columnDefinition
+      .find((column) => column.columnId === 'userId')
+      ?.ngValue?.toLowerCase();
+    let groupId = this._columnDefinition
+      .find((column) => column.columnId === 'groupId')
+      ?.ngValue?.toLowerCase();
+    let dateOfRelationshipCreation = this._columnDefinition
+      .find((column) => column.columnId === 'dateOfRelationshipCreation')
+      ?.ngValue?.toLowerCase();
+
+    if (userId || groupId || dateOfRelationshipCreation) {
+      let tempViewData = this._data.map((e) => e);
+      //userId
+      if (userId?.length > 0) {
+        tempViewData = tempViewData.filter((row) => {
+          if (row.userId.toLowerCase().includes(userId)) return true;
+          return false;
+        });
+      }
+      //groupId
+      if (groupId?.length > 0) {
+        tempViewData = tempViewData.filter((row) => {
+          if (row.firstName.toLowerCase().includes(groupId)) return true;
+          return false;
+        });
+      }
+      //dateOfRelationshipCreation
+      if (dateOfRelationshipCreation?.length > 0) {
+        tempViewData = tempViewData.filter((row) => {
+          if (row.lastName.toLowerCase().includes(dateOfRelationshipCreation))
+            return true;
+          return false;
+        });
+      }
+
+      this._tableViewData = tempViewData;
+    } else {
+      this._tableViewData = JSON.parse(JSON.stringify(this._data));
+    }
+  }
+
+  groupFilter() {
+    let groupId = this._columnDefinition
+      .find((column) => column.columnId === 'groupId')
+      ?.ngValue?.toLowerCase();
+    let groupName = this._columnDefinition
+      .find((column) => column.columnId === 'groupName')
+      ?.ngValue?.toLowerCase();
+    let description = this._columnDefinition
+      .find((column) => column.columnId === 'description')
+      ?.ngValue?.toLowerCase();
+
+    if (groupId || groupName || description) {
+      let tempViewData = this._data.map((e) => e);
+
+      //groupId
+      if (groupId?.length > 0) {
+        tempViewData = tempViewData.filter((row) => {
+          if (row.firstName.toLowerCase().includes(groupId)) return true;
+          return false;
+        });
+      }
+      //groupName
+      if (groupName?.length > 0) {
+        tempViewData = tempViewData.filter((row) => {
+          if (row.userId.toLowerCase().includes(groupName)) return true;
+          return false;
+        });
+      }
+      //description
+      if (description?.length > 0) {
+        tempViewData = tempViewData.filter((row) => {
+          if (row.lastName.toLowerCase().includes(description)) return true;
+          return false;
+        });
+      }
+
+      this._tableViewData = tempViewData;
+    } else {
+      this._tableViewData = JSON.parse(JSON.stringify(this._data));
+    }
+  }
+
+  ////////////////////////////Filter End/////////////////////////////////
 }

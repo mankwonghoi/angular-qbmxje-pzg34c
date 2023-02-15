@@ -1,12 +1,18 @@
 <!--Nav Bar-->
-<ul ngbNav [(activeId)]="activeId" class="nav-pills">
-  <li [ngbNavItem]="1" (click)="onTabChange()">
+<ul
+  ngbNav
+  [(activeId)]="activeId"
+  (navChange)="onTabChange($event)"
+  (activeIdChange)="onActiveIdChange()"
+  class="nav-pills"
+>
+  <li [ngbNavItem]="1">
     <a ngbNavLink>User</a>
   </li>
-  <li [ngbNavItem]="2" (click)="onTabChange()">
+  <li [ngbNavItem]="2">
     <a ngbNavLink>User Access</a>
   </li>
-  <li [ngbNavItem]="3" (click)="onTabChange()">
+  <li [ngbNavItem]="3">
     <a ngbNavLink>Group</a>
   </li>
 </ul>
