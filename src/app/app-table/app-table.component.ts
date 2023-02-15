@@ -155,15 +155,49 @@ export class AppTableComponent implements OnInit {
   }
 
   onTabChange(): void {
-    console.log(this.activeId);
     this._viewSelected = this.activeId;
     this.refreshTable();
   }
 
+  //Disable Save button
   saveBtnDisabled() {
     if (this._viewSelected == TabId.User) {
-      return JSON.stringify(this._tableViewData).includes('""');
+      //Is data equals
+      if (JSON.stringify(this._tableViewData) == JSON.stringify(this._data))
+        return true;
+      //Is empty input exist?
+      let tempViewData = this._tableViewData.map((e) => e);
+      tempViewData = tempViewData.filter((row) => {
+        if (
+          row.userId.length == 0 ||
+          row.firstName.length == 0 ||
+          row.lastName.length == 0 ||
+          row.loginName.length == 0 ||
+          row.password.length == 0
+        )
+          return true;
+        return false;
+      });
+      //return JSON.stringify(this._tableViewData).includes('""');
+      return tempViewData.length > 0;
+
+      //return angular.equals(val1, val2);
     }
     return true;
+  }
+
+  onInputIdleave(id: string): void {
+    if (id.length > 0) {
+      let tempCount = 0;
+      this._tableViewData.forEach(function (row) {
+        if (row.userId == id) {
+          tempCount++;
+          if (tempCount >= 2) {
+            console.log(row.userId);
+            console.log('duplicate:' + id);
+          }
+        }
+      });
+    }
   }
 }
