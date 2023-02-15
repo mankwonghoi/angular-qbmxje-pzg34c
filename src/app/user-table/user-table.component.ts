@@ -3,11 +3,11 @@ import { columnDefinition, TabId } from '../ColumnDefinition';
 import { UserService } from '../Data/user.service';
 
 @Component({
-  selector: 'app-app-table',
-  templateUrl: './app-table.component.html',
-  styleUrls: ['./app-table.component.css'],
+  selector: 'app-user-table',
+  templateUrl: './user-table.component.html',
+  styleUrls: ['./user-table.component.css'],
 })
-export class AppTableComponent implements OnInit {
+export class UserTableComponent implements OnInit {
   _data: any[] = [];
   _tableViewData: any[] = []; //temp object for display
 
@@ -18,7 +18,7 @@ export class AppTableComponent implements OnInit {
 
   searchText: string = '';
 
-  constructor(public userService: UserService) { }
+  constructor(public userService: UserService) {}
 
   ngOnInit(): void {
     //Init current selected Tab to User
@@ -77,32 +77,28 @@ export class AppTableComponent implements OnInit {
         //userId
         if (userId?.length > 0) {
           tempViewData = tempViewData.filter((row) => {
-            if (row.userId.toLowerCase().includes(userId))
-              return true;
+            if (row.userId.toLowerCase().includes(userId)) return true;
             return false;
           });
         }
         //firstName
         if (firstName?.length > 0) {
           tempViewData = tempViewData.filter((row) => {
-            if (row.firstName.toLowerCase().includes(firstName))
-              return true;
+            if (row.firstName.toLowerCase().includes(firstName)) return true;
             return false;
           });
         }
         //lastName
         if (lastName?.length > 0) {
           tempViewData = tempViewData.filter((row) => {
-            if (row.lastName.toLowerCase().includes(lastName))
-              return true;
+            if (row.lastName.toLowerCase().includes(lastName)) return true;
             return false;
           });
         }
         //firstName
         if (loginName?.length > 0) {
           tempViewData = tempViewData.filter((row) => {
-            if (row.loginName.toLowerCase().includes(loginName))
-              return true;
+            if (row.loginName.toLowerCase().includes(loginName)) return true;
             return false;
           });
         }

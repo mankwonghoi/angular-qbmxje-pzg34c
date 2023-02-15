@@ -1,20 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AppTableComponent } from './app-table.component';
+import { UserTableComponent } from './user-table.component';
 
 describe('AppTableComponent', () => {
-  let component: AppTableComponent;
-  let fixture: ComponentFixture<AppTableComponent>;
+  let component: UserTableComponent;
+  let fixture: ComponentFixture<UserTableComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AppTableComponent ]
-    })
-    .compileComponents();
+      declarations: [UserTableComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AppTableComponent);
+    fixture = TestBed.createComponent(UserTableComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
