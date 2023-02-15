@@ -62,70 +62,9 @@ export class AppTableComponent implements OnInit {
 
   // Filter data when user input anything
   public inputChange(event: any, key: any) {
-    //console.log(event);
-
-    //console.log(key);
-
     // User Tab
     if (this._viewSelected == TabId.User) {
-      let userId = this._columnDefinition
-        .find((column) => column.columnId === 'userId')
-        ?.ngValue?.toLowerCase();
-      let firstName = this._columnDefinition
-        .find((column) => column.columnId === 'firstName')
-        ?.ngValue?.toLowerCase();
-      let lastName = this._columnDefinition
-        .find((column) => column.columnId === 'lastName')
-        ?.ngValue?.toLowerCase();
-      let loginName = this._columnDefinition
-        .find((column) => column.columnId === 'loginName')
-        ?.ngValue?.toLowerCase();
-      let email = this._columnDefinition
-        .find((column) => column.columnId === 'email')
-        ?.ngValue?.toLowerCase();
-
-      if (userId || firstName || lastName || loginName || email) {
-        let tempViewData = this._data.map((e) => e);
-        //userId
-        if (userId?.length > 0) {
-          tempViewData = tempViewData.filter((row) => {
-            if (row.userId.toLowerCase().includes(userId)) return true;
-            return false;
-          });
-        }
-        //firstName
-        if (firstName?.length > 0) {
-          tempViewData = tempViewData.filter((row) => {
-            if (row.firstName.toLowerCase().includes(firstName)) return true;
-            return false;
-          });
-        }
-        //lastName
-        if (lastName?.length > 0) {
-          tempViewData = tempViewData.filter((row) => {
-            if (row.lastName.toLowerCase().includes(lastName)) return true;
-            return false;
-          });
-        }
-        //loginName
-        if (loginName?.length > 0) {
-          tempViewData = tempViewData.filter((row) => {
-            if (row.loginName.toLowerCase().includes(loginName)) return true;
-            return false;
-          });
-        }
-        //email
-        if (email?.length > 0) {
-          tempViewData = tempViewData.filter((row) => {
-            if (row.email.toLowerCase().includes(email)) return true;
-            return false;
-          });
-        }
-
-        this._tableViewData = tempViewData;
-      } else {
-        this._tableViewData = JSON.parse(JSON.stringify(this._data));
-      }
+      this.userFilter();
     }
   }
 
@@ -157,6 +96,10 @@ export class AppTableComponent implements OnInit {
   save() {
     if (this._viewSelected == TabId.User) {
       //Do each records validation
+      this.userService.vaildate(
+        JSON.parse(JSON.stringify(this._tableViewData))
+      );
+
       this.userService.updateUser(
         JSON.parse(JSON.stringify(this._tableViewData))
       );
@@ -224,5 +167,66 @@ export class AppTableComponent implements OnInit {
       function () { },
       DialogType.oneOKButton
     );
+  }
+
+  userFilter() {
+    let userId = this._columnDefinition
+      .find((column) => column.columnId === 'userId')
+      ?.ngValue?.toLowerCase();
+    let firstName = this._columnDefinition
+      .find((column) => column.columnId === 'firstName')
+      ?.ngValue?.toLowerCase();
+    let lastName = this._columnDefinition
+      .find((column) => column.columnId === 'lastName')
+      ?.ngValue?.toLowerCase();
+    let loginName = this._columnDefinition
+      .find((column) => column.columnId === 'loginName')
+      ?.ngValue?.toLowerCase();
+    let email = this._columnDefinition
+      .find((column) => column.columnId === 'email')
+      ?.ngValue?.toLowerCase();
+
+    if (userId || firstName || lastName || loginName || email) {
+      let tempViewData = this._data.map((e) => e);
+      //userId
+      if (userId?.length > 0) {
+        tempViewData = tempViewData.filter((row) => {
+          if (row.userId.toLowerCase().includes(userId)) return true;
+          return false;
+        });
+      }
+      //firstName
+      if (firstName?.length > 0) {
+        tempViewData = tempViewData.filter((row) => {
+          if (row.firstName.toLowerCase().includes(firstName)) return true;
+          return false;
+        });
+      }
+      //lastName
+      if (lastName?.length > 0) {
+        tempViewData = tempViewData.filter((row) => {
+          if (row.lastName.toLowerCase().includes(lastName)) return true;
+          return false;
+        });
+      }
+      //loginName
+      if (loginName?.length > 0) {
+        tempViewData = tempViewData.filter((row) => {
+          if (row.loginName.toLowerCase().includes(loginName)) return true;
+          return false;
+        });
+      }
+      //email
+      if (email?.length > 0) {
+        tempViewData = tempViewData.filter((row) => {
+          if (row.email.toLowerCase().includes(email)) return true;
+          return false;
+        });
+      }
+
+      this._tableViewData = tempViewData;
+    } else {
+      this._tableViewData = JSON.parse(JSON.stringify(this._data));
+    }
   }
 }
