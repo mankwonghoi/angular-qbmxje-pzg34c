@@ -4,12 +4,6 @@ export enum TabId {
   UserGroup = 3,
 }
 
-export interface Group {
-  groupId: string;
-  groupName: string;
-  description: string;
-}
-
 export interface UserAccess {
   userId: string;
   groupId: string;
