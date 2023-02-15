@@ -8,6 +8,8 @@ import { AppComponent } from './app.component';
 import { TopBarComponent } from './top-bar/top-bar.component';
 import { AppTableComponent } from './app-table/app-table.component';
 import { MaskPasswordPipe } from './mask-password.pipe';
+import { DialogComponent } from './dialog/dialog.component';
+import { DialogService } from './dialog/dialog.service';
 
 @NgModule({
   imports: [
@@ -17,11 +19,13 @@ import { MaskPasswordPipe } from './mask-password.pipe';
     FormsModule,
     RouterModule.forRoot([{ path: '', component: AppTableComponent }]),
   ],
+  providers: [DialogService],
   declarations: [
     AppComponent,
     TopBarComponent,
     AppTableComponent,
     MaskPasswordPipe,
+    DialogComponent,
   ],
   bootstrap: [AppComponent],
 })

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { columnDefinition, TabId } from '../ColumnDefinition';
 import { UserService } from '../Data/user.service';
+import { DialogService, DialogType } from '../dialog/dialog.service';
 
 @Component({
   selector: 'app-app-table',
@@ -18,7 +19,10 @@ export class AppTableComponent implements OnInit {
 
   searchText: string = '';
 
-  constructor(public userService: UserService) {}
+  constructor(
+    public userService: UserService,
+    public dialogService: DialogService
+  ) {}
 
   ngOnInit(): void {
     //Init current selected Tab to User
@@ -198,6 +202,20 @@ export class AppTableComponent implements OnInit {
           }
         }
       });
+      if (tempCount >= 2) {
+        this.showDialog(id + ' already defined');
+      }
     }
+  }
+
+  showDialog(msg: string) {
+    this.dialogService.confirmThis(
+      msg,
+      function () {
+        console.log('dsda');
+      },
+      function () {},
+      DialogType.oneOKButton
+    );
   }
 }
