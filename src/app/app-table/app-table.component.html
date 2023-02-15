@@ -176,7 +176,7 @@
           [(ngModel)]="editItem.groupId"
           (focusout)="onInputIdleave(editItem.groupId)"
         />
-        <span *ngIf="!editItem.newRecord">{{ editItem.userId }}</span>
+        <span *ngIf="!editItem.newRecord">{{ editItem.groupId }}</span>
       </td>
       <td>
         <input

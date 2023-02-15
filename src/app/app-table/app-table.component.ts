@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { columnDefinition, TabId } from '../ColumnDefinition';
-import { UserService } from '../Data/user.service';
 import { GroupService } from '../Data/group.service';
 import { UserAccessService } from '../Data/user-access.service';
+import { UserService } from '../Data/user.service';
 import { DialogService, DialogType } from '../dialog/dialog.service';
 
 @Component({
@@ -26,7 +26,7 @@ export class AppTableComponent implements OnInit {
     public groupService: GroupService,
     public userAccessService: UserAccessService,
     public dialogService: DialogService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     //Init current selected Tab to User
@@ -107,21 +107,20 @@ export class AppTableComponent implements OnInit {
             return false;
           });
         }
-        //firstName
+        //loginName
         if (loginName?.length > 0) {
           tempViewData = tempViewData.filter((row) => {
             if (row.loginName.toLowerCase().includes(loginName)) return true;
             return false;
           });
         }
-        //firstName
+        //email
         if (email?.length > 0) {
           tempViewData = tempViewData.filter((row) => {
             if (row.email.toLowerCase().includes(email)) return true;
             return false;
           });
         }
-        //end TODO
 
         this._tableViewData = tempViewData;
       } else {
@@ -222,7 +221,7 @@ export class AppTableComponent implements OnInit {
       function () {
         console.log('dsda');
       },
-      function () {},
+      function () { },
       DialogType.oneOKButton
     );
   }
