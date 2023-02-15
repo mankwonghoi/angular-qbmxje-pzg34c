@@ -18,7 +18,7 @@ export class AppTableComponent implements OnInit {
 
   searchText: string = '';
 
-  constructor(public userService: UserService) {}
+  constructor(public userService: UserService) { }
 
   ngOnInit(): void {
     //Init current selected Tab to User
@@ -75,41 +75,41 @@ export class AppTableComponent implements OnInit {
       if (userId || firstName || lastName || loginName || email) {
         let tempViewData = this._data.map((e) => e);
         //userId
-        if (userId && userId.length > 0) {
+        if (userId?.length > 0) {
           tempViewData = tempViewData.filter((row) => {
-            if (userId && row.userId.toLowerCase().includes(userId))
+            if (row.userId.toLowerCase().includes(userId))
               return true;
             return false;
           });
         }
         //firstName
-        if (firstName && firstName.length > 0) {
+        if (firstName?.length > 0) {
           tempViewData = tempViewData.filter((row) => {
-            if (firstName && row.firstName.toLowerCase().includes(firstName))
+            if (row.firstName.toLowerCase().includes(firstName))
               return true;
             return false;
           });
         }
         //lastName
-        if (lastName && lastName.length > 0) {
+        if (lastName?.length > 0) {
           tempViewData = tempViewData.filter((row) => {
-            if (lastName && row.lastName.toLowerCase().includes(lastName))
+            if (row.lastName.toLowerCase().includes(lastName))
               return true;
             return false;
           });
         }
         //firstName
-        if (loginName && loginName.length > 0) {
+        if (loginName?.length > 0) {
           tempViewData = tempViewData.filter((row) => {
-            if (loginName && row.loginName.toLowerCase().includes(loginName))
+            if (row.loginName.toLowerCase().includes(loginName))
               return true;
             return false;
           });
         }
         //firstName
-        if (email && email.length > 0) {
+        if (email?.length > 0) {
           tempViewData = tempViewData.filter((row) => {
-            if (email && row.email.toLowerCase().includes(email)) return true;
+            if (row.email.toLowerCase().includes(email)) return true;
             return false;
           });
         }
@@ -143,7 +143,7 @@ export class AppTableComponent implements OnInit {
         email: '',
         newRecord: true,
       };
-      this._data.splice(0, 0, newUser);
+      this._tableViewData.splice(0, 0, newUser);
     }
   }
 
@@ -166,7 +166,7 @@ export class AppTableComponent implements OnInit {
 
   saveBtnDisabled() {
     if (this._viewSelected == TabId.User) {
-      return JSON.stringify(this._data).includes('""');
+      return JSON.stringify(this._tableViewData).includes('""');
     }
     return true;
   }

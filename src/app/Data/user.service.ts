@@ -54,7 +54,7 @@ export class UserService {
   ];
 
   getUser() {
-    return this.user;
+    return JSON.parse(JSON.stringify(this.user));
   }
 
   updateUser(users: User[]) {
